@@ -21,7 +21,8 @@ public class DB_setUP {
     String ConnectionURL = "jdbc:mysql://localhost:3306";
     //Create Connection
     Connection con = null;
-    con = DriverManager.getConnection(ConnectionURL,"root","root123");//put your username and password so DB works =)
+     //-------------put your username and password so DB works =)//-------------------
+    con = DriverManager.getConnection(ConnectionURL,"root","root123");
     
     //CreateDatabase
     Statement st = con.createStatement();

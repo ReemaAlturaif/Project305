@@ -17,6 +17,7 @@ public class DatabaseConnection {
 
     // Database URL and credentials
     private static final String CONNECTION_URL = "jdbc:mysql://localhost:3306/LibraryDB";
+    //-------------put your username and password so DB works =)//-------------------
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root123";
 
