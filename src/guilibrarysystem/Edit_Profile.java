@@ -4,19 +4,26 @@
  */
 package guilibrarysystem;
 
+import DataBase.User;
+import DataBase.user_CRUD;
 import java.awt.Color;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author 96650
  */
 public class Edit_Profile extends javax.swing.JFrame {
-
+  private User currentUser;
     /**
      * Creates new form Edit_Profile
      */
-    public Edit_Profile() {
+    public Edit_Profile(User currentUser) {
         initComponents();
+        this.currentUser = currentUser;
         Color backgroundColor = new Color(51,51,51);
         getContentPane().setBackground(backgroundColor);
     }
@@ -45,7 +52,7 @@ public class Edit_Profile extends javax.swing.JFrame {
         jPasswordField1 = new javax.swing.JPasswordField();
         jPasswordField2 = new javax.swing.JPasswordField();
         jLabel18 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        ReturnLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -179,10 +186,10 @@ public class Edit_Profile extends javax.swing.JFrame {
                 .addGap(16, 16, 16))
         );
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/left-arrow (2).png"))); // NOI18N
-        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+        ReturnLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/left-arrow (2).png"))); // NOI18N
+        ReturnLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel1MouseClicked(evt);
+                ReturnLabelMouseClicked(evt);
             }
         });
 
@@ -193,7 +200,7 @@ public class Edit_Profile extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
+                    .addComponent(ReturnLabel)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(27, Short.MAX_VALUE))
         );
@@ -201,7 +208,7 @@ public class Edit_Profile extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(ReturnLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(48, 48, 48))
@@ -217,26 +224,70 @@ public class Edit_Profile extends javax.swing.JFrame {
     
 
     private void Edit_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Edit_ButtonActionPerformed
-       this.toBack();
-       setVisible(false);
-       new User_Account_window().toFront();
-       new User_Account_window().setState(java.awt.Frame.NORMAL);
+//       this.toBack();
+//       setVisible(false);
+//       new User_Account_window(currentUser).toFront();
+//       new User_Account_window(currentUser).setState(java.awt.Frame.NORMAL);
+    String newName = jTextField3.getText();
+    String newEmail = jTextField1.getText();
+    String confirmEmail = jTextField4.getText();
+    String newPassword = new String(jPasswordField1.getPassword());
+    String confirmPassword = new String(jPasswordField2.getPassword());
+    
+    if (!newEmail.equals(confirmEmail)) {
+        JOptionPane.showMessageDialog(this, "Emails do not match!", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    if (!newPassword.equals(confirmPassword)) {
+        JOptionPane.showMessageDialog(this, "Passwords do not match!", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // Create an instance of user_CRUD to call update method
+    user_CRUD userCrud = new user_CRUD();
+    boolean isUpdated = userCrud.updateUserInfo(currentUser.getId(), newName, newEmail, newPassword);
+
+    if (isUpdated) {
+        JOptionPane.showMessageDialog(this, "Profile updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+        // Update the current user object
+        currentUser.setUsername(newName);
+        currentUser.setEmail(newEmail);
+        currentUser.setPassword(newPassword);
+
+    
+        User_Account_window userAccountWindow;
+        try {
+            userAccountWindow = new User_Account_window(currentUser);
+            userAccountWindow.setVisible(true);
+             this.dispose();
+        } catch (ParseException ex) {
+            Logger.getLogger(Edit_Profile.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    } else {
+        JOptionPane.showMessageDialog(this, "Failed to update profile. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+    }
         
     }//GEN-LAST:event_Edit_ButtonActionPerformed
 
     private void Cancle_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Cancle_ButtonActionPerformed
-       this.toBack();
-       setVisible(false);
-       new User_Account_window().toFront();
-       new User_Account_window().setState(java.awt.Frame.NORMAL);
+
+      try {
+          this.toBack();
+          setVisible(false);
+          new User_Account_window(currentUser).toFront();
+          new User_Account_window(currentUser).setState(java.awt.Frame.NORMAL);
+      } catch (ParseException ex) {
+          Logger.getLogger(Edit_Profile.class.getName()).log(Level.SEVERE, null, ex);
+      }
     }//GEN-LAST:event_Cancle_ButtonActionPerformed
 
-    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+    private void ReturnLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ReturnLabelMouseClicked
         // TODO add your handling code here:
-        MainD m = new MainD();
+        MainD m = new MainD(currentUser); 
         m.setVisible(true);
         this.setVisible(false);
-    }//GEN-LAST:event_jLabel1MouseClicked
+    }//GEN-LAST:event_ReturnLabelMouseClicked
 
     /**
      * @param args the command line arguments
@@ -266,17 +317,17 @@ public class Edit_Profile extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Edit_Profile().setVisible(true);
-            }
-        });
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new Edit_Profile().setVisible(true);
+//            }
+//        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Cancle_Button;
     private javax.swing.JButton Edit_Button;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel ReturnLabel;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel18;

@@ -1,5 +1,12 @@
 package guilibrarysystem;
 
+import DataBase.Book;
+import DataBase.User;
+import DataBase.book_CRUD;
+import javax.swing.JOptionPane;
+
+
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -11,11 +18,12 @@ package guilibrarysystem;
  * @author mahab
  */
 public class Search extends javax.swing.JFrame {
-
+     private User currentUser;
     /**
      * Creates new form Search
      */
-    public Search() {
+    public Search(User user) {
+        this.currentUser = user;
         initComponents();
     }
 
@@ -120,7 +128,7 @@ public class Search extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(back2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(220, Short.MAX_VALUE))
+                .addContainerGap(218, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -144,7 +152,7 @@ public class Search extends javax.swing.JFrame {
                 .addComponent(searchAuthorName, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(55, 55, 55)
                 .addComponent(searchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(96, Short.MAX_VALUE))
+                .addContainerGap(87, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -172,13 +180,22 @@ public class Search extends javax.swing.JFrame {
     }//GEN-LAST:event_searchBookNameActionPerformed
 
     private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
-        // TODO add your handling code here:
-        String book = searchBookName.getText();
-        String author = searchAuthorName.getText();
-        FoundedBook f = new FoundedBook(book, author);
-        f.setVisible(true);        
-        this.setVisible(false);
-        
+        // TODO add your handling code here:                                 
+    String book = searchBookName.getText();
+    String author = searchAuthorName.getText();    
+    Book foundBook = book_CRUD.searchBook(book, author);
+    
+if (foundBook != null) {
+        // If the book is found, open the FoundedBook frame
+        FoundedBook f = new FoundedBook(foundBook, currentUser);
+        f.setVisible(true);
+        this.dispose();
+    } else {
+        // If no book is found, show a message and stay on the search frame
+        JOptionPane.showMessageDialog(this, "No book found with that name and author.");
+    }
+
+
     }//GEN-LAST:event_searchBtnActionPerformed
 
     private void searchAuthorNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchAuthorNameActionPerformed
@@ -189,9 +206,10 @@ public class Search extends javax.swing.JFrame {
 
     private void back2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_back2MouseClicked
         // TODO add your handling code here:
-        MainD m = new MainD();
-        m.setVisible(true);
-        this.setVisible(false);
+    MainD m = new MainD(currentUser); 
+    m.initialize(); 
+    m.setVisible(true);
+    this.setVisible(false);
     }//GEN-LAST:event_back2MouseClicked
 
     /**
@@ -222,11 +240,11 @@ public class Search extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Search().setVisible(true);
-            }
-        });
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//           public void run() {
+//                new Search().setVisible(true);
+//            }
+//        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

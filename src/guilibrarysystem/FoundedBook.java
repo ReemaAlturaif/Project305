@@ -1,27 +1,42 @@
 package guilibrarysystem;
 
+
+
+
 import javax.swing.*;
+import DataBase.Book;
+import DataBase.User;
+import DataBase.book_CRUD;
+import DataBase.user_CRUD;
 
 public class FoundedBook extends javax.swing.JFrame {
 
     String bookname;
     String author;
     String status;
+    private Book book;
+    private User currentUser;
 
-    public FoundedBook() {
+
+
+      public FoundedBook(Book book, User user) {
         initComponents();
+        this.currentUser = user;
+        this.book = book;
+        initializeFields();
     }
 
-    public FoundedBook(String bookName, String author) {
-        this();
-        this.bookname = bookName;
-        this.author = author;
-        this.status = "Available";
-        //trying.setToolTipText(bookname + " " + author);
-        bookNameTxt.setText(this.bookname);
-        bookAuthorTxt.setText(this.author);
-        bookStatTxt.setText(status);
+    private void initializeFields() {
+        if (book != null) {
+          bookNameTxt.setText(this.book.getBookname());
+          bookAuthorTxt.setText(this.book.getAuthor());
+          bookStatTxt.setText(this.book.getStatus());
+          bookIDTxt1.setText(Integer.toString(this.book.getId()));
+        } else {
+            this.dispose();
+        }
     }
+ 
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -44,7 +59,7 @@ public class FoundedBook extends javax.swing.JFrame {
         bookAuthorTxt = new javax.swing.JTextField();
         bookStatTxt = new javax.swing.JTextField();
         bookID = new javax.swing.JLabel();
-        bookStatTxt1 = new javax.swing.JTextField();
+        bookIDTxt1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Search Result");
@@ -86,7 +101,7 @@ public class FoundedBook extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(jLabel7)
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         borrowBtn.setBackground(new java.awt.Color(255, 204, 153));
@@ -126,12 +141,22 @@ public class FoundedBook extends javax.swing.JFrame {
         });
 
         bookStatTxt.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        bookStatTxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bookStatTxtActionPerformed(evt);
+            }
+        });
 
         bookID.setFont(new java.awt.Font("Dialog", 1, 20)); // NOI18N
         bookID.setForeground(new java.awt.Color(255, 255, 255));
         bookID.setText("Book ID ");
 
-        bookStatTxt1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        bookIDTxt1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        bookIDTxt1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bookIDTxt1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -154,7 +179,7 @@ public class FoundedBook extends javax.swing.JFrame {
                                     .addComponent(bookNameTxt)
                                     .addComponent(bookAuthorTxt)
                                     .addComponent(bookStatTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(bookStatTxt1, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(bookIDTxt1, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(borrowBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(93, 93, 93)
@@ -179,13 +204,13 @@ public class FoundedBook extends javax.swing.JFrame {
                     .addComponent(bookStatTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(34, 34, 34)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bookStatTxt1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bookIDTxt1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bookID))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(borrowBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(99, Short.MAX_VALUE))
+                .addContainerGap(91, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -209,27 +234,84 @@ public class FoundedBook extends javax.swing.JFrame {
 
     private void bookNameTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookNameTxtActionPerformed
         // TODO add your handling code here:
-        //bookNameTxt.setText(bookname);
+        bookNameTxt.setText(bookname);
         
     }//GEN-LAST:event_bookNameTxtActionPerformed
 
     private void bookAuthorTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookAuthorTxtActionPerformed
         // TODO add your handling code here:
-        //bookAuthorTxt.setText(author);
+        bookAuthorTxt.setText(author);
     }//GEN-LAST:event_bookAuthorTxtActionPerformed
 
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
         // TODO add your handling code here:
-        Search s = new Search();
+        Search s = new Search(currentUser);
         s.setVisible(true);
         this.setVisible(false);
         
     }//GEN-LAST:event_cancelBtnActionPerformed
 
     private void borrowBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrowBtnActionPerformed
-        // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null, "Borrowing Confermed");
+         //TODO add your handling code here:                                       
+        if (book.getStatus().equalsIgnoreCase("Available")) {
+        try {
+            if (currentUser == null) {
+                JOptionPane.showMessageDialog(this, "You must be logged in to borrow a book.");
+                return;
+            }
+
+            // Get current date for borrowing
+            java.util.Date currentDate = new java.util.Date();
+            java.text.SimpleDateFormat dateFormat = new java.text.SimpleDateFormat("yyyy-MM-dd");
+            String borrowDate = dateFormat.format(currentDate);
+            
+            // Calculate return date (e.g., 14 days later)
+            java.util.Calendar calendar = java.util.Calendar.getInstance();
+            calendar.setTime(currentDate);
+            calendar.add(java.util.Calendar.DAY_OF_MONTH, 14); // Add 14 days
+            String returnDate = dateFormat.format(calendar.getTime());
+
+            // Get a unique ID for the borrowing record
+            book_CRUD bookCrud = new book_CRUD();
+            int borrowingId = bookCrud.getNextBorrowingId();
+
+            // Call the borrowBook method from book_CRUD with all required parameters
+            bookCrud.borrowBook(borrowingId, book.getId(), currentUser.getId(), borrowDate, returnDate);
+
+            // Decrease the quantity of the book
+            int newQuantity = book.getQuantity() - 1; // Decrease by 1
+            bookCrud.updateBookStatus(book.getId(), newQuantity); // Update status based on new quantity
+
+            // Update UI or status after borrowing
+            JOptionPane.showMessageDialog(this, "Book borrowed successfully!");
+
+            // If quantity is now zero, update UI to reflect that
+            if (newQuantity == 0) {
+                bookStatTxt.setText("Unavailable");
+                book.setStatus("Unavailable"); // Update local book object status
+            } else {
+                bookStatTxt.setText("Available");
+                book.setStatus("Available"); // Update local book object status
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error during borrowing: " + e.getMessage());
+        }
+    } else {
+        JOptionPane.showMessageDialog(this, "This book is not available for borrowing.");
+    }
     }//GEN-LAST:event_borrowBtnActionPerformed
+
+    private void bookStatTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookStatTxtActionPerformed
+        // TODO add your handling code here:
+         bookStatTxt.setText(this.book.getStatus());
+    }//GEN-LAST:event_bookStatTxtActionPerformed
+
+    private void bookIDTxt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookIDTxt1ActionPerformed
+        // TODO add your handling code here:
+       bookIDTxt1.setText(Integer.toString(this.book.getId()));
+
+    }//GEN-LAST:event_bookIDTxt1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -259,21 +341,21 @@ public class FoundedBook extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FoundedBook().setVisible(true);
-            }
-        });
+//           java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new FoundedBook().setVisible(true);
+//            }
+//        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel bookAuthor;
     private javax.swing.JTextField bookAuthorTxt;
     private javax.swing.JLabel bookID;
+    private javax.swing.JTextField bookIDTxt1;
     private javax.swing.JLabel bookName;
     private javax.swing.JTextField bookNameTxt;
     private javax.swing.JTextField bookStatTxt;
-    private javax.swing.JTextField bookStatTxt1;
     private javax.swing.JLabel bookStatus;
     private javax.swing.JButton borrowBtn;
     private javax.swing.JButton cancelBtn;

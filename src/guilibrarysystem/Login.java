@@ -5,12 +5,21 @@
  */
 package guilibrarysystem;
 
+import DataBase.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author reaho
  */
 public class Login extends javax.swing.JFrame {
-
+  private User currentUser;
     /**
      * Creates new form Login
      */
@@ -52,7 +61,6 @@ public class Login extends javax.swing.JFrame {
         signUplink = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
 
-        jLabel13.setIcon(new javax.swing.ImageIcon("C:\\Users\\reaho\\Documents\\NetBeansProjects\\GUILibrarySystem\\src\\icons\\icons8-invisible-24.png")); // NOI18N
         jLabel13.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -66,7 +74,7 @@ public class Login extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Left1.setBackground(new java.awt.Color(255, 255, 255));
-        Left1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 11), new java.awt.Color(102, 102, 102))); // NOI18N
+        Left1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 16), new java.awt.Color(102, 102, 102))); // NOI18N
         Left1.setForeground(new java.awt.Color(255, 255, 255));
         Left1.setPreferredSize(new java.awt.Dimension(400, 500));
         Left1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -305,7 +313,7 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_showMouseClicked
 
     private void signUplinkMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signUplinkMouseClicked
-        SignUp  SignUpFrame = new  SignUp();
+        SignUp SignUpFrame = new  SignUp();
         SignUpFrame.setVisible(true);
         SignUpFrame.pack();
         SignUpFrame.setLocationRelativeTo(null);//to the center
@@ -314,11 +322,22 @@ public class Login extends javax.swing.JFrame {
 
     private void loginbuttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginbuttonMouseClicked
         // TODO add your handling code here:
-        MainD  MainDFrame = new  MainD ();
-        MainDFrame.setVisible(true);
-        MainDFrame.pack();
-        MainDFrame.setLocationRelativeTo(null);//to the center
-        this.dispose();
+    String username = txtusername.getText();
+    String password = new String(txtpassword.getPassword());
+
+    user_CRUD userCrud = new user_CRUD();
+    User currentUser = userCrud.verifyUser(username, password); 
+    User.setCurrentUser(currentUser); 
+
+    if (currentUser != null) {
+        MainD mainDFrame = new MainD(currentUser); // Pass User to MainDMainDFrame
+        mainDFrame.initialize(); 
+        mainDFrame.setVisible(true);
+        this.dispose(); // Close Login window
+    } else {
+        // Username or password is incorrect
+        JOptionPane.showMessageDialog(this, "Invalid username or password", "Login Error", JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_loginbuttonMouseClicked
 
     /**

@@ -5,6 +5,11 @@
  */
 package guilibrarysystem;
 
+import DataBase.User;
+import DataBase.book_CRUD;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,10 +23,22 @@ public class MainD extends javax.swing.JFrame {
      */
     int totalOfCurBorrowed;
     int numOfnotReturnedBook;
-    public MainD() {
-        initComponents();
-    }
+   private User currentUser;
 
+    public MainD(User user) {
+        this.currentUser = user;
+        initComponents();
+        
+        
+    }
+    public void initialize() {
+    if (currentUser != null) {
+        usernameProfile.setText(currentUser.getUsername());
+    } else {
+        usernameProfile.setText("Welcome, Guest");
+    }
+}
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -318,9 +335,9 @@ public class MainD extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void searchbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchbuttonActionPerformed
-         Search s = new Search();
+        Search s = new Search(currentUser);
         s.setVisible(true);
-        this.setVisible(false);
+        this.dispose();
         // TODO add your handling code here:
     }//GEN-LAST:event_searchbuttonActionPerformed
 
@@ -330,11 +347,11 @@ public class MainD extends javax.swing.JFrame {
 
     private void borrowedbookbuttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_borrowedbookbuttonMouseClicked
         // TODO add your handling code here:
-        BorrowingHistoryFrame BHFrame = new BorrowingHistoryFrame();
-        BHFrame.setVisible(true);
-        BHFrame.pack();
-        BHFrame.setLocationRelativeTo(null);//to the center
-        this.dispose();
+User loggedInUser = currentUser; //retrieves the currently logged-in user
+BorrowingHistoryFrame historyFrame = new BorrowingHistoryFrame(loggedInUser);
+historyFrame.setVisible(true);
+historyFrame.pack();
+historyFrame.setLocationRelativeTo(null);  // Center the window
     }//GEN-LAST:event_borrowedbookbuttonMouseClicked
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
@@ -342,28 +359,52 @@ public class MainD extends javax.swing.JFrame {
     }//GEN-LAST:event_formMouseClicked
 
     private void accountsettingMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accountsettingMouseClicked
-        // TODO add your handling code here:
-        User_Account_window e = new User_Account_window();
-        e.setVisible(true);
-        this.setVisible(false);
+        try {
+            // TODO add your handling code here:
+            User_Account_window e = new User_Account_window(currentUser);
+            e.initialize();
+            e.setVisible(true);
+            this.setVisible(false);
+        } catch (ParseException ex) {
+            Logger.getLogger(MainD.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }//GEN-LAST:event_accountsettingMouseClicked
 
     private void TotalborrowedbookMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TotalborrowedbookMouseClicked
         // TODO add your handling code here:
-        totalOfCurBorrowed =4;
-        JOptionPane.showMessageDialog(null, "You have currently borrowed: "+totalOfCurBorrowed+" books");
+int userId = User.getCurrentUser().getId(); 
+
+    // Create an instance of book_CRUD to call the database method
+    book_CRUD bookCrud = new book_CRUD();
+
+    // Get the total borrowed books for the user
+    int totalOfCurBorrowed = bookCrud.getTotalBorrowedBooks(userId);
+
+    // Show the result in a message dialog
+    JOptionPane.showMessageDialog(null, "You have currently borrowed: " + totalOfCurBorrowed + " books");
     }//GEN-LAST:event_TotalborrowedbookMouseClicked
 
     private void overduebookMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_overduebookMouseClicked
         // TODO add your handling code here:
-        numOfnotReturnedBook = 2;
-        JOptionPane.showMessageDialog(null, "You have overdue: "+numOfnotReturnedBook+" books."+"\n"+" Please return them as soon as possible to avoid additional fines");
+    // Get the current user ID
+    int userId = currentUser.getId(); 
+
+    // Fetch the number of overdue books
+    int numOfnotReturnedBook = book_CRUD.countOverdueBooks(userId);
+    if(numOfnotReturnedBook == 0 ){
+        JOptionPane.showMessageDialog(null, "You have No overdue books." );
+    }else{
+    // Display the result in a message dialog
+    JOptionPane.showMessageDialog(null, "You have overdue: " + numOfnotReturnedBook + " books.\n" +
+                                        "Please return them as soon as possible to avoid additional fines.");
+    }
+
     }//GEN-LAST:event_overduebookMouseClicked
 
     private void createreturnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_createreturnMouseClicked
         // TODO add your handling code here:
-        Returning m = new Returning();
+        Returning m = new Returning(currentUser);
         m.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_createreturnMouseClicked
@@ -396,11 +437,13 @@ public class MainD extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MainD().setVisible(true);
-            }
-        });
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new MainD().setVisible(true);
+//            }
+//        });
+            
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -5,6 +5,10 @@
  */
 package guilibrarysystem;
 
+import DataBase.DB_setUP;
+
+
+
 /**
  *
  * @author reaho
@@ -17,10 +21,11 @@ public class GUILibrarySystem {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        DB_setUP.CreateDatabase();
         Login LoginFrame = new Login();
         LoginFrame.setVisible(true);
         LoginFrame.pack();
         LoginFrame.setLocationRelativeTo(null);//to the center
-    }
-    
+
+}
 }

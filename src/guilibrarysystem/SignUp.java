@@ -1,15 +1,18 @@
 
 package guilibrarysystem;
 
+import DataBase.*;
+import javax.swing.JOptionPane;
+
+
 
 public class SignUp extends javax.swing.JFrame {
-
+  private User currentUser;
    
     public SignUp() {
         initComponents();
         show2.setVisible(false);
     }
-
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -238,7 +241,7 @@ public class SignUp extends javax.swing.JFrame {
                                         .addComponent(disable2)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(show2)))))))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -277,7 +280,7 @@ public class SignUp extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14)
                     .addComponent(loginlink))
-                .addContainerGap(61, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -348,12 +351,52 @@ public class SignUp extends javax.swing.JFrame {
     }//GEN-LAST:event_show2MouseClicked
 
     private void signupbuttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signupbuttonMouseClicked
-        // TODO add your handling code here:
-        MainD  MainDFrame = new  MainD ();
-        MainDFrame.setVisible(true);
-        MainDFrame.pack();
-        MainDFrame.setLocationRelativeTo(null);//to the center
-        this.dispose();
+        // TODO add your handling code here:                                          
+    String username = SINGUPtxtname.getText().trim();
+    String password = new String(newpasswordtxt.getPassword()).trim();
+    String email = emailtxt.getText().trim();
+    String phoneNumber = phonetxt.getText().trim();
+
+    // Validate input fields
+    if (username.isEmpty() || password.isEmpty() || email.isEmpty() || phoneNumber.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please fill in The fields.", "Input Error", JOptionPane.WARNING_MESSAGE);
+        return; 
+    }
+
+    try {
+        // Create an instance of user_CRUD
+        user_CRUD userCrud = new user_CRUD();
+        // Get the next available user ID
+        int newUserId = userCrud.getNextUserId();
+
+        // Add the new user with the generated ID
+        userCrud.addUser(newUserId, username, password, email, phoneNumber);
+        User currentUser = new User(newUserId, username, password, email, phoneNumber);
+
+        // Verify the user was added to the database
+        User verifiedUser = userCrud.verifyUser(username, password);
+
+        if (verifiedUser == null) {
+            JOptionPane.showMessageDialog(this, "Error creating user. Please try again.", "Sign-up Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Debugging: Confirm user exists
+        System.out.println("New user created and verified with ID: " + verifiedUser.getId());
+
+        // Set current user and proceed to main application frame
+        User.setCurrentUser(verifiedUser);
+        MainD mainDFrame = new MainD(verifiedUser);
+        mainDFrame.initialize();
+        mainDFrame.setVisible(true);
+        mainDFrame.pack();
+        mainDFrame.setLocationRelativeTo(null); // Center the frame
+        this.dispose(); // Close the signup frame
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "An error occurred during sign-up: " + e.getMessage(), "Sign-up Error", JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_signupbuttonMouseClicked
 
     /**

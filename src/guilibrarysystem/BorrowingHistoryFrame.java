@@ -5,22 +5,39 @@ package guilibrarysystem;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import javax.swing.*;
-import java.awt.*;
-import java.io.*;
-import java.text.MessageFormat;
+import DataBase.Borrowing;
+import DataBase.User;
+import DataBase.book_CRUD;
+import javax.swing.table.DefaultTableModel;
+import java.util.List;
 /**
- *
  * @author HQ
  */
 public class BorrowingHistoryFrame extends javax.swing.JFrame {
+    private User currentUser;
 
-    /**
-     * Creates new form BorrowingHistoryFrame
-     */
-    public BorrowingHistoryFrame() {
+    public BorrowingHistoryFrame(User user) {
         initComponents();
+        this.currentUser = user;
+        loadBorrowingHistory();
     }
+  private void loadBorrowingHistory() {
+        book_CRUD bookCrud = new book_CRUD();
+        List<Borrowing> history = bookCrud.getBorrowingHistory(currentUser.getId());
+
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0); // Clear existing data
+
+        for (Borrowing borrowing : history) {
+            model.addRow(new Object[]{
+                borrowing.getBookTitle(),
+                borrowing.getBorrowDate().toString(),
+                borrowing.getReturnDate().toString()
+            });
+        }
+    }
+
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -56,9 +73,6 @@ public class BorrowingHistoryFrame extends javax.swing.JFrame {
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"Book 1", "2023-01-01", "2023-01-15"},
-                {"Book 2", "2023-02-10", "2023-02-25"},
-                {"Book 3", "2023-03-05", "2023-03-20"},
-                {"Book 4", "2023-04-15", "2023-04-30"},
                 {null, null, null},
                 {null, null, null},
                 {null, null, null},
@@ -182,7 +196,8 @@ public class BorrowingHistoryFrame extends javax.swing.JFrame {
 
     private void back1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_back1MouseClicked
         // TODO add your handling code here:
-        MainD main = new MainD();
+        MainD main = new MainD(currentUser);
+        main.initialize(); 
         main.setVisible(true);
         main.pack();
         main.setLocationRelativeTo(null);//to the center
@@ -202,11 +217,11 @@ public class BorrowingHistoryFrame extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new BorrowingHistoryFrame().setVisible(true);
-            }
-        });
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new BorrowingHistoryFrame().setVisible(true);
+//            }
+//        });
     }
 
 
