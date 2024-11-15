@@ -285,8 +285,10 @@ public class Edit_Profile extends javax.swing.JFrame {
     private void ReturnLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ReturnLabelMouseClicked
         // TODO add your handling code here:
         MainD m = new MainD(currentUser); 
+        m.initialize(); 
         m.setVisible(true);
-        this.setVisible(false);
+        this.dispose();
+        
     }//GEN-LAST:event_ReturnLabelMouseClicked
 
     /**
