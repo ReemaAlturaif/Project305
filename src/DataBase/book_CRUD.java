@@ -100,7 +100,7 @@ public class book_CRUD {
     String sql = "SELECT b.bookName, br.borrowDate, br.returnDate FROM borrowings br " +
                  "JOIN books b ON br.bookId = b.id WHERE br.userId = ?";
 
-    try (Connection con = DatabaseConnection.getConnection();
+    try (Connection con = getConnection();
          PreparedStatement pstmt = con.prepareStatement(sql)) {
 
         pstmt.setInt(1, userId);
@@ -121,7 +121,7 @@ public class book_CRUD {
         int totalBooks = 0;
         String query = "SELECT COUNT(*) FROM borrowings WHERE userId = ? AND returnDate <> CURDATE()";
 
-        try (Connection con = DatabaseConnection.getConnection();
+        try (Connection con = getConnection();
              PreparedStatement stmt = con.prepareStatement(query)) {
 
             stmt.setInt(1, userId); // Set the user ID parameter

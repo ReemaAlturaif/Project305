@@ -17,8 +17,6 @@ import javax.swing.*;
  */
 //operations (Create, Read, Update, Delete)
 public class user_CRUD {
-          Connection con = null;
-          String connectionURL = "jdbc:mysql://localhost:3306/LibraryDB";    
            public void addUser(int id, String username, String password, String email, String phoneNumber) {
         try (Connection con = getConnection()) {
             String query = "INSERT INTO users (id, username, password, email, phoneNumber) VALUES (?, ?, ?, ?, ?)";
@@ -97,7 +95,7 @@ public User verifyUser(String username, String password) {
     }
   
     public void updateUserProfile(int userId, String sex, java.sql.Date birthday, String nationality) {
-        try (Connection con = DatabaseConnection.getConnection()) {
+        try (Connection con = getConnection()) {
             String query = "UPDATE users SET sex = ?, birthday = ?, nationality = ? WHERE id = ?";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setString(1, sex);
