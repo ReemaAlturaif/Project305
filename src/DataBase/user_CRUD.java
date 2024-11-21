@@ -52,7 +52,7 @@ public class user_CRUD {
     }
         }
 
-public User verifyUser(String username, String password) {
+public static User verifyUser(String username, String password) {
     String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
     try (Connection con = getConnection();
          PreparedStatement pstmt = con.prepareStatement(sql)) {

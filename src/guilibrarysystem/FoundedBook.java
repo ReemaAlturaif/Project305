@@ -1,13 +1,13 @@
 package guilibrarysystem;
 
-
-
-
 import javax.swing.*;
 import DataBase.Book;
 import DataBase.User;
-import DataBase.book_CRUD;
-import DataBase.user_CRUD;
+import Network.LibraryClient;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 public class FoundedBook extends javax.swing.JFrame {
 
@@ -17,9 +17,7 @@ public class FoundedBook extends javax.swing.JFrame {
     private Book book;
     private User currentUser;
 
-
-
-      public FoundedBook(Book book, User user) {
+    public FoundedBook(Book book, User user) {
         initComponents();
         this.currentUser = user;
         this.book = book;
@@ -28,15 +26,14 @@ public class FoundedBook extends javax.swing.JFrame {
 
     private void initializeFields() {
         if (book != null) {
-          bookNameTxt.setText(this.book.getBookname());
-          bookAuthorTxt.setText(this.book.getAuthor());
-          bookStatTxt.setText(this.book.getStatus());
-          bookIDTxt1.setText(Integer.toString(this.book.getId()));
+            bookNameTxt.setText(this.book.getBookname());
+            bookAuthorTxt.setText(this.book.getAuthor());
+            bookStatTxt.setText(this.book.getStatus());
+            bookIDTxt1.setText(Integer.toString(this.book.getId()));
         } else {
             this.dispose();
         }
     }
- 
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -101,7 +98,7 @@ public class FoundedBook extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(jLabel7)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         borrowBtn.setBackground(new java.awt.Color(255, 204, 153));
@@ -210,7 +207,7 @@ public class FoundedBook extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(borrowBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(91, Short.MAX_VALUE))
+                .addContainerGap(99, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -235,7 +232,7 @@ public class FoundedBook extends javax.swing.JFrame {
     private void bookNameTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookNameTxtActionPerformed
         // TODO add your handling code here:
         bookNameTxt.setText(bookname);
-        
+
     }//GEN-LAST:event_bookNameTxtActionPerformed
 
     private void bookAuthorTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookAuthorTxtActionPerformed
@@ -248,68 +245,101 @@ public class FoundedBook extends javax.swing.JFrame {
         Search s = new Search(currentUser);
         s.setVisible(true);
         this.setVisible(false);
-        
+
     }//GEN-LAST:event_cancelBtnActionPerformed
 
     private void borrowBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrowBtnActionPerformed
-         //TODO add your handling code here:                                       
+        // Ensure the book is available for borrowing
         if (book.getStatus().equalsIgnoreCase("Available")) {
-        try {
-            if (currentUser == null) {
-                JOptionPane.showMessageDialog(this, "You must be logged in to borrow a book.");
-                return;
+            try {
+                // Ensure the user is logged in
+                if (currentUser == null) {
+                    JOptionPane.showMessageDialog(this, "You must be logged in to borrow a book.", "Login Required", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+
+                // Get current date for borrowing
+                java.util.Date currentDate = new java.util.Date();
+                java.text.SimpleDateFormat dateFormat = new java.text.SimpleDateFormat("yyyy-MM-dd");
+                String borrowDate = dateFormat.format(currentDate);
+
+                // Calculate return date (e.g., 14 days later)
+                java.util.Calendar calendar = java.util.Calendar.getInstance();
+                calendar.setTime(currentDate);
+                calendar.add(java.util.Calendar.DAY_OF_MONTH, 14); // Add 14 days
+                String returnDate = dateFormat.format(calendar.getTime());
+
+                // Prepare borrowing request to the server
+                String request = "BORROW_BOOK|" + book.getId() + "|" + currentUser.getId() + "|" + borrowDate + "|" + returnDate;
+
+                // Send the request to the server using LibraryClient
+                LibraryClient client = new LibraryClient("localhost", 12345); // Adjust server details as needed
+                String response = client.sendRequest(request);
+                client.close();
+
+                // Process server response
+                if (response.equalsIgnoreCase("SUCCESS")) {
+                    // Update book quantity and UI
+                    book.setQuantity(book.getQuantity() - 1); // Decrease by 1
+                    int newQuantity = book.getQuantity();
+
+                    if (newQuantity == 0) {
+                        bookStatTxt.setText("Unavailable");
+                        book.setStatus("Unavailable"); // Update local book object status
+                    } else {
+                        bookStatTxt.setText("Available");
+                    }
+
+                    // Log the borrowing action
+                    logBorrowingAction(currentUser.getId(), book.getId(), borrowDate, returnDate);
+
+                    // Refresh the UI to reflect changes
+                    refreshBorrowingHistory();
+
+                    JOptionPane.showMessageDialog(this, "Book borrowed successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Failed to borrow book: " + response, "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error connecting to the server: " + e.getMessage(), "Connection Error", JOptionPane.ERROR_MESSAGE);
+            } catch (Exception e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "An unexpected error occurred: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
-
-            // Get current date for borrowing
-            java.util.Date currentDate = new java.util.Date();
-            java.text.SimpleDateFormat dateFormat = new java.text.SimpleDateFormat("yyyy-MM-dd");
-            String borrowDate = dateFormat.format(currentDate);
-            
-            // Calculate return date (e.g., 14 days later)
-            java.util.Calendar calendar = java.util.Calendar.getInstance();
-            calendar.setTime(currentDate);
-            calendar.add(java.util.Calendar.DAY_OF_MONTH, 14); // Add 14 days
-            String returnDate = dateFormat.format(calendar.getTime());
-
-            // Get a unique ID for the borrowing record
-            book_CRUD bookCrud = new book_CRUD();
-            int borrowingId = bookCrud.getNextBorrowingId();
-
-            // Call the borrowBook method from book_CRUD with all required parameters
-            bookCrud.borrowBook(borrowingId, book.getId(), currentUser.getId(), borrowDate, returnDate);
-
-            // Decrease the quantity of the book
-            int newQuantity = book.getQuantity() - 1; // Decrease by 1
-            bookCrud.updateBookStatus(book.getId(), newQuantity); // Update status based on new quantity
-
-            // Update UI or status after borrowing
-            JOptionPane.showMessageDialog(this, "Book borrowed successfully!");
-
-            // If quantity is now zero, update UI to reflect that
-            if (newQuantity == 0) {
-                bookStatTxt.setText("Unavailable");
-                book.setStatus("Unavailable"); // Update local book object status
-            } else {
-                bookStatTxt.setText("Available");
-                book.setStatus("Available"); // Update local book object status
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error during borrowing: " + e.getMessage());
+        } else {
+            JOptionPane.showMessageDialog(this, "This book is not available for borrowing.", "Unavailable", JOptionPane.WARNING_MESSAGE);
         }
-    } else {
-        JOptionPane.showMessageDialog(this, "This book is not available for borrowing.");
-    }
     }//GEN-LAST:event_borrowBtnActionPerformed
+
+    private void logBorrowingAction(int userId, int bookId, String borrowDate, String returnDate) {
+        try (FileWriter fw = new FileWriter("borrowing_logs.txt", true);
+                BufferedWriter bw = new BufferedWriter(fw);
+                PrintWriter out = new PrintWriter(bw)) {
+
+            out.println("User ID: " + userId + ", Book ID: " + bookId
+                    + ", Borrow Date: " + borrowDate + ", Return Date: " + returnDate);
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Failed to log borrowing action: " + e.getMessage(), "Logging Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void refreshBorrowingHistory() {
+        BorrowingHistoryFrame historyFrame = new BorrowingHistoryFrame(currentUser);
+        historyFrame.setVisible(true);
+        this.dispose(); // Close current frame
+    }
+
 
     private void bookStatTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookStatTxtActionPerformed
         // TODO add your handling code here:
-         bookStatTxt.setText(this.book.getStatus());
+        bookStatTxt.setText(this.book.getStatus());
     }//GEN-LAST:event_bookStatTxtActionPerformed
 
     private void bookIDTxt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookIDTxt1ActionPerformed
         // TODO add your handling code here:
-       bookIDTxt1.setText(Integer.toString(this.book.getId()));
+        bookIDTxt1.setText(Integer.toString(this.book.getId()));
 
     }//GEN-LAST:event_bookIDTxt1ActionPerformed
 

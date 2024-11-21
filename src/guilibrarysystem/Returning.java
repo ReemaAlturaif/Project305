@@ -5,10 +5,10 @@
 package guilibrarysystem;
 
 import DataBase.*;
-import static DataBase.DatabaseConnection.getConnection;
+import Network.LibraryClient;
 import java.awt.Color;
+import java.io.IOException;
 import java.sql.*;
-import java.util.ArrayList;
 import javax.swing.*;
 
 /**
@@ -17,25 +17,27 @@ import javax.swing.*;
  */
 //سويت الريترن يشتغل بس على اربع كتب تم استعارتها//
 public class Returning extends javax.swing.JFrame {
- private User currentUser;
+
+    private User currentUser;
+
     /**
      * Creates new form Returning
+     *
      * @param currentUser
      */
     public Returning(User currentUser) {
-    this.currentUser = currentUser;
-    initComponents();
-    getContentPane().setBackground(Color.white);
-    loadUserBorrowedBooks();
+        this.currentUser = currentUser;
+        initComponents();
+        getContentPane().setBackground(Color.white);
+        loadUserBorrowedBooks();
 
-}
+    }
 
     // Load borrowed books for the user
     private void loadUserBorrowedBooks() {
         try (Connection con = DatabaseConnection.getConnection()) {
-            String query = "SELECT b.bookName, b.author, br.returnDate " +
-                           "FROM borrowings br JOIN books b ON br.bookId = b.id WHERE br.userId = ? ";
-
+            String query = "SELECT b.bookName, b.author, br.returnDate "
+                    + "FROM borrowings br JOIN books b ON br.bookId = b.id WHERE br.userId = ?";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setInt(1, currentUser.getId());
             ResultSet rs = ps.executeQuery();
@@ -49,12 +51,24 @@ public class Returning extends javax.swing.JFrame {
             javax.swing.JLabel[] dueDateLabels = {DueDate1, DueDate2, DueDate3, DueDate4};
 
             while (rs.next() && index < bookCheckBoxes.length) {
+                
+
+                // Set values to UI components
                 bookCheckBoxes[index].setText(rs.getString("bookName"));
                 bookCheckBoxes[index].setVisible(true);
+
                 authorLabels[index].setText(rs.getString("author"));
                 authorLabels[index].setVisible(true);
-                dueDateLabels[index].setText(rs.getDate("returnDate").toString());
+
+                // Handle possible NULL returnDate
+                Date returnDate = rs.getDate("returnDate");
+                if (returnDate != null) {
+                    dueDateLabels[index].setText(returnDate.toString());
+                } else {
+                    dueDateLabels[index].setText("Not Returned");
+                }
                 dueDateLabels[index].setVisible(true);
+
                 index++;
             }
 
@@ -64,7 +78,6 @@ public class Returning extends javax.swing.JFrame {
                 authorLabels[i].setVisible(false);
                 dueDateLabels[i].setVisible(false);
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error loading borrowed books: " + e.getMessage());
@@ -333,7 +346,7 @@ public class Returning extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    
+
     private void BookName2CheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BookName2CheckboxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_BookName2CheckboxActionPerformed
@@ -356,7 +369,7 @@ public class Returning extends javax.swing.JFrame {
         BookName3Checkbox.setSelected(true);
         BookName1checkbox.setSelected(true);
         BookName4Checkbox.setSelected(true);
-        
+
     }//GEN-LAST:event_Select_All_ButtonActionPerformed
 
     private void Select_None_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Select_None_ButtonActionPerformed
@@ -368,33 +381,40 @@ public class Returning extends javax.swing.JFrame {
     }//GEN-LAST:event_Select_None_ButtonActionPerformed
 
     private void Return_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Return_ButtonActionPerformed
-    
-    boolean allReturned = true;
-    
-    javax.swing.JCheckBox[] bookCheckBoxes = {BookName1checkbox, BookName2Checkbox, BookName3Checkbox, BookName4Checkbox};
 
-    for (javax.swing.JCheckBox checkBox : bookCheckBoxes) {
-        if (checkBox.isSelected() && checkBox.isVisible()) {
-            String bookName = checkBox.getText();
-            if (book_CRUD.returnBook(currentUser.getId(), bookName)) {
-                JOptionPane.showMessageDialog(this, "Book returned: " + bookName);
-            } else {
-                allReturned = false;
-                JOptionPane.showMessageDialog(this, "Failed to return book: " + bookName);
+        boolean allReturned = true;
+
+        javax.swing.JCheckBox[] bookCheckBoxes = {BookName1checkbox, BookName2Checkbox, BookName3Checkbox, BookName4Checkbox};
+
+        try (LibraryClient client = new LibraryClient("localhost", 12345)) {
+            for (javax.swing.JCheckBox checkBox : bookCheckBoxes) {
+                if (checkBox.isSelected() && checkBox.isVisible()) {
+                    String bookName = checkBox.getText();
+                    String request = "RETURN_BOOK|" + currentUser.getId() + "|" + bookName;
+                    String response = client.sendRequest(request);
+
+                    if (response.equalsIgnoreCase("SUCCESS")) {
+                        JOptionPane.showMessageDialog(this, "Book returned: " + bookName);
+                    } else {
+                        allReturned = false;
+                        JOptionPane.showMessageDialog(this, "Failed to return book: " + bookName + ". Reason: " + response);
+                    }
+                }
             }
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error connecting to the server: " + e.getMessage());
         }
-    }
-    
-    if (allReturned) {
-        loadUserBorrowedBooks(); // Refresh borrowed books list if all books are returned successfully
-    }
 
+        if (allReturned) {
+            loadUserBorrowedBooks(); // Refresh borrowed books list if all books are returned successfully
+        }
     }//GEN-LAST:event_Return_ButtonActionPerformed
 
     private void back6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_back6MouseClicked
         // TODO add your handling code here:
         MainD m = new MainD(currentUser);
-        m.initialize(); 
+        m.initialize();
         m.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_back6MouseClicked
@@ -1858,4 +1878,3 @@ public class Returning extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     // End of variables declaration//GEN-END:variables
 }
-

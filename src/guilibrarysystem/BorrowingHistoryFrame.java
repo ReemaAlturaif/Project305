@@ -10,34 +10,54 @@ import DataBase.User;
 import DataBase.book_CRUD;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
+import javax.swing.JOptionPane;
+
 /**
  * @author HQ
  */
 public class BorrowingHistoryFrame extends javax.swing.JFrame {
+
     private User currentUser;
 
     public BorrowingHistoryFrame(User user) {
-        initComponents();
+        if (user == null) {
+            throw new IllegalArgumentException("User cannot be null");
+        }
         this.currentUser = user;
+        initComponents();
         loadBorrowingHistory();
     }
-  private void loadBorrowingHistory() {
-        book_CRUD bookCrud = new book_CRUD();
-        List<Borrowing> history = bookCrud.getBorrowingHistory(currentUser.getId());
 
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        model.setRowCount(0); // Clear existing data
+    private void loadBorrowingHistory() {
+        try {
+            book_CRUD bookCrud = new book_CRUD();
 
-        for (Borrowing borrowing : history) {
-            model.addRow(new Object[]{
-                borrowing.getBookTitle(),
-                borrowing.getBorrowDate().toString(),
-                borrowing.getReturnDate().toString()
-            });
+            if (currentUser == null) {
+                JOptionPane.showMessageDialog(this, "Error: User is not logged in.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            List<Borrowing> history = bookCrud.getBorrowingHistory(currentUser.getId());
+            if (history == null || history.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No borrowing history found.", "Info", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            model.setRowCount(0); // Clear existing data
+
+            for (Borrowing borrowing : history) {
+                model.addRow(new Object[]{
+                    borrowing.getBookTitle(),
+                    borrowing.getBorrowDate() != null ? borrowing.getBorrowDate().toString() : "N/A",
+                    borrowing.getReturnDate() != null ? borrowing.getReturnDate().toString() : "N/A"
+                });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Failed to load borrowing history: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-
-   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -177,12 +197,12 @@ public class BorrowingHistoryFrame extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void DownloadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DownloadButtonActionPerformed
 
-       
-  // TODO add your handling code here:
+        // TODO add your handling code here:
     }//GEN-LAST:event_DownloadButtonActionPerformed
 
     private void PrintButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PrintButtonActionPerformed
@@ -197,7 +217,7 @@ public class BorrowingHistoryFrame extends javax.swing.JFrame {
     private void back1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_back1MouseClicked
         // TODO add your handling code here:
         MainD main = new MainD(currentUser);
-        main.initialize(); 
+        main.initialize();
         main.setVisible(true);
         main.pack();
         main.setLocationRelativeTo(null);//to the center
@@ -213,7 +233,7 @@ public class BorrowingHistoryFrame extends javax.swing.JFrame {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        
+
         //</editor-fold>
 
         /* Create and display the form */

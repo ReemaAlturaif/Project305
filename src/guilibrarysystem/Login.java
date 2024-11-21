@@ -74,7 +74,7 @@ public class Login extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Left1.setBackground(new java.awt.Color(255, 255, 255));
-        Left1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 16), new java.awt.Color(102, 102, 102))); // NOI18N
+        Left1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 11), new java.awt.Color(102, 102, 102))); // NOI18N
         Left1.setForeground(new java.awt.Color(255, 255, 255));
         Left1.setPreferredSize(new java.awt.Dimension(400, 500));
         Left1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());

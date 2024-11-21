@@ -22,7 +22,7 @@ public class DB_setUP {
     //Create Connection
     Connection con = null;
      //-------------put your username and password so DB works =)//-------------------
-    con = DriverManager.getConnection(ConnectionURL,"root","root123");
+    con = DriverManager.getConnection(ConnectionURL,"root","001279");
     
     //CreateDatabase
     Statement st = con.createStatement();
@@ -57,7 +57,7 @@ public class DB_setUP {
         Connection con = null;
         try{
         String connectionURL = "jdbc:mysql://localhost:3306/"+databaseName;        
-        con = DriverManager.getConnection(connectionURL, "root", "root123");
+        con = DriverManager.getConnection(connectionURL, "root", "001279");
         
         Statement st = con.createStatement();
         

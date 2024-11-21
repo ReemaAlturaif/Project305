@@ -25,11 +25,11 @@ public class Book {
         this.Status = Status;
         this.quantity = quantity;
     }
-    
 
     public int getId() {
         return id;
     }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -41,26 +41,33 @@ public class Book {
     public String getBookname() {
         return Bookname;
     }
+
     public void setAuthor(String author) {
         this.author = author;
     }
-        public String getAuthor() {
+
+    public String getAuthor() {
         return author;
     }
-        public void setStatus(String Status) {
+
+    public void setStatus(String Status) {
         this.Status = Status;
     }
+
     public String getStatus() {
         return Status;
     }
+
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
-
     public int getQuantity() {
         return quantity;
     }
-    
 
+    // Corrected getName() method
+    public String getName() {
+        return Bookname; // Return the book name
+    }
 }

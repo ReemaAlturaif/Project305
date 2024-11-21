@@ -5,20 +5,19 @@ import DataBase.User;
 import DataBase.book_CRUD;
 import javax.swing.JOptionPane;
 
-
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author mahab
  */
 public class Search extends javax.swing.JFrame {
-     private User currentUser;
+
+    private User currentUser;
+
     /**
      * Creates new form Search
      */
@@ -128,7 +127,7 @@ public class Search extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(back2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(218, Short.MAX_VALUE))
+                .addContainerGap(220, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -152,7 +151,7 @@ public class Search extends javax.swing.JFrame {
                 .addComponent(searchAuthorName, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(55, 55, 55)
                 .addComponent(searchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(87, Short.MAX_VALUE))
+                .addContainerGap(96, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -181,18 +180,30 @@ public class Search extends javax.swing.JFrame {
 
     private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
         // TODO add your handling code here:                                 
-    String book = searchBookName.getText();
-    String author = searchAuthorName.getText();    
-    Book foundBook = book_CRUD.searchBook(book, author);
-    
-if (foundBook != null) {
-        // If the book is found, open the FoundedBook frame
+        // Get user input from text fields
+    String bookTitle = searchBookName.getText().trim();
+    String bookAuthor = searchAuthorName.getText().trim();
+
+    // Validate user input
+    if (bookTitle.isEmpty() && bookAuthor.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please enter at least one search criterion (title or author).");
+        return;
+    }
+
+    // Perform search using book_CRUD
+    Book foundBook = book_CRUD.searchBook(bookTitle, bookAuthor);
+
+    if (foundBook != null) {
+        // Book found
+        JOptionPane.showMessageDialog(this, "Book Found: " + foundBook.getBookname()); // Use getBookname()
+        
+        // Open FoundedBook window and pass found book details
         FoundedBook f = new FoundedBook(foundBook, currentUser);
         f.setVisible(true);
         this.dispose();
     } else {
-        // If no book is found, show a message and stay on the search frame
-        JOptionPane.showMessageDialog(this, "No book found with that name and author.");
+        // Book not found
+        JOptionPane.showMessageDialog(this, "No book found with the given details.");
     }
 
 
@@ -201,15 +212,15 @@ if (foundBook != null) {
     private void searchAuthorNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchAuthorNameActionPerformed
         // TODO add your handling code here:
         String author = authorName.getText();
-        
+
     }//GEN-LAST:event_searchAuthorNameActionPerformed
 
     private void back2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_back2MouseClicked
         // TODO add your handling code here:
-    MainD m = new MainD(currentUser); 
-    m.initialize(); 
-    m.setVisible(true);
-    this.setVisible(false);
+        MainD m = new MainD(currentUser);
+        m.initialize();
+        m.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_back2MouseClicked
 
     /**

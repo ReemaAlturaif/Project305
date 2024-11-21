@@ -23,22 +23,22 @@ public class MainD extends javax.swing.JFrame {
      */
     int totalOfCurBorrowed;
     int numOfnotReturnedBook;
-   private User currentUser;
+    private User currentUser;
 
     public MainD(User user) {
         this.currentUser = user;
         initComponents();
-        
-        
+
     }
+
     public void initialize() {
-    if (currentUser != null) {
-        usernameProfile.setText(currentUser.getUsername());
-    } else {
-        usernameProfile.setText("Welcome, Guest");
+        if (currentUser != null) {
+            usernameProfile.setText(currentUser.getUsername());
+        } else {
+            usernameProfile.setText("Welcome, Guest");
+        }
     }
-}
-   
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -347,11 +347,11 @@ public class MainD extends javax.swing.JFrame {
 
     private void borrowedbookbuttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_borrowedbookbuttonMouseClicked
         // TODO add your handling code here:
-User loggedInUser = currentUser; //retrieves the currently logged-in user
-BorrowingHistoryFrame historyFrame = new BorrowingHistoryFrame(loggedInUser);
-historyFrame.setVisible(true);
-historyFrame.pack();
-historyFrame.setLocationRelativeTo(null);  // Center the window
+        User loggedInUser = currentUser; //retrieves the currently logged-in user
+        BorrowingHistoryFrame historyFrame = new BorrowingHistoryFrame(loggedInUser);
+        historyFrame.setVisible(true);
+        historyFrame.pack();
+        historyFrame.setLocationRelativeTo(null);  // Center the window
     }//GEN-LAST:event_borrowedbookbuttonMouseClicked
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
@@ -368,37 +368,37 @@ historyFrame.setLocationRelativeTo(null);  // Center the window
         } catch (ParseException ex) {
             Logger.getLogger(MainD.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }//GEN-LAST:event_accountsettingMouseClicked
 
     private void TotalborrowedbookMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TotalborrowedbookMouseClicked
         // TODO add your handling code here:
-int userId = User.getCurrentUser().getId(); 
+        int userId = User.getCurrentUser().getId();
 
-    // Create an instance of book_CRUD to call the database method
-    book_CRUD bookCrud = new book_CRUD();
+        // Create an instance of book_CRUD to call the database method
+        book_CRUD bookCrud = new book_CRUD();
 
-    // Get the total borrowed books for the user
-    int totalOfCurBorrowed = bookCrud.getTotalBorrowedBooks(userId);
+        // Get the total borrowed books for the user
+        int totalOfCurBorrowed = bookCrud.getTotalBorrowedBooks(userId);
 
-    // Show the result in a message dialog
-    JOptionPane.showMessageDialog(null, "You have currently borrowed: " + totalOfCurBorrowed + " books");
+        // Show the result in a message dialog
+        JOptionPane.showMessageDialog(null, "You have currently borrowed: " + totalOfCurBorrowed + " books");
     }//GEN-LAST:event_TotalborrowedbookMouseClicked
 
     private void overduebookMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_overduebookMouseClicked
         // TODO add your handling code here:
-    // Get the current user ID
-    int userId = currentUser.getId(); 
+        // Get the current user ID
+        int userId = currentUser.getId();
 
-    // Fetch the number of overdue books
-    int numOfnotReturnedBook = book_CRUD.countOverdueBooks(userId);
-    if(numOfnotReturnedBook == 0 ){
-        JOptionPane.showMessageDialog(null, "You have No overdue books." );
-    }else{
-    // Display the result in a message dialog
-    JOptionPane.showMessageDialog(null, "You have overdue: " + numOfnotReturnedBook + " books.\n" +
-                                        "Please return them as soon as possible to avoid additional fines.");
-    }
+        // Fetch the number of overdue books
+        int numOfnotReturnedBook = book_CRUD.countOverdueBooks(userId);
+        if (numOfnotReturnedBook == 0) {
+            JOptionPane.showMessageDialog(null, "You have No overdue books.");
+        } else {
+            // Display the result in a message dialog
+            JOptionPane.showMessageDialog(null, "You have overdue: " + numOfnotReturnedBook + " books.\n"
+                    + "Please return them as soon as possible to avoid additional fines.");
+        }
 
     }//GEN-LAST:event_overduebookMouseClicked
 
@@ -442,8 +442,6 @@ int userId = User.getCurrentUser().getId();
 //                new MainD().setVisible(true);
 //            }
 //        });
-            
-        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
