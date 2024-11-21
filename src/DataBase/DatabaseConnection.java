@@ -19,7 +19,7 @@ public class DatabaseConnection {
     private static final String CONNECTION_URL = "jdbc:mysql://localhost:3306/LibraryDB";
     //-------------put your username and password so DB works =)//-------------------
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "001279";
+    private static final String PASSWORD = "sh&dan2823";
 
     // Private constructor to prevent instantiation
     private DatabaseConnection() {}

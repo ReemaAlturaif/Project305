@@ -8,6 +8,11 @@ package guilibrarysystem;
 import DataBase.Borrowing;
 import DataBase.User;
 import DataBase.book_CRUD;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Date;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -18,8 +23,9 @@ import javax.swing.JOptionPane;
 public class BorrowingHistoryFrame extends javax.swing.JFrame {
 
     private User currentUser;
-
-    public BorrowingHistoryFrame(User user) {
+    File f = new File("C:/Users/96650/Documents/NetBeansProjects/Project305/BorrowingHistory.txt");
+    PrintWriter out = new PrintWriter(new FileWriter(f,false));
+    public BorrowingHistoryFrame(User user) throws IOException{
         if (user == null) {
             throw new IllegalArgumentException("User cannot be null");
         }
@@ -105,7 +111,6 @@ public class BorrowingHistoryFrame extends javax.swing.JFrame {
             }
         ));
         jTable1.setFocusable(false);
-        jTable1.setIntercellSpacing(new java.awt.Dimension(0, 0));
         jTable1.setRowHeight(25);
         jTable1.setSelectionBackground(new java.awt.Color(255, 159, 180));
         jScrollPane2.setViewportView(jTable1);
@@ -114,6 +119,11 @@ public class BorrowingHistoryFrame extends javax.swing.JFrame {
         PrintButton.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         PrintButton.setForeground(new java.awt.Color(255, 255, 255));
         PrintButton.setText("Print ");
+        PrintButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                PrintButtonMouseClicked(evt);
+            }
+        });
         PrintButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 PrintButtonActionPerformed(evt);
@@ -223,6 +233,33 @@ public class BorrowingHistoryFrame extends javax.swing.JFrame {
         main.setLocationRelativeTo(null);//to the center
         this.dispose();
     }//GEN-LAST:event_back1MouseClicked
+
+    private void PrintButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PrintButtonMouseClicked
+        // TODO add your handling code here:
+        String Header;
+        Date currentDate = new Date();
+        book_CRUD bookCrud = new book_CRUD();
+        List<Borrowing> history = bookCrud.getBorrowingHistory(currentUser.getId());
+        Header = 
+                     ("****************************************************************\n"+
+                      "                     Welcome to KAU Library\n"+
+                      "***************************************************************\n\n\n"+
+                      "====================YOUR Borrowing History====================\n"+
+                      "====================User Information===========================\n"+
+                      "User Name: "+currentUser.getUsername()+"\n"+
+                      "number: "+currentUser.getPhoneNumber()+"\n"+
+                      "time of issue: "+currentDate+"\n\n"+
+                      "===============borrowed books history===============\n");
+        
+                     out.printf(Header+"%-30s %-20s%n", "Book Title", "Borrowing Date\n"+
+                      "---------------------------------------------------");
+                     for (Borrowing borrowing : history) {
+                         out.printf("%-30s %-20s%n", borrowing.getBookTitle(),borrowing.getBorrowDate()+"\n");
+                         Header+= borrowing.getBookTitle()+"    "+borrowing.getBorrowDate()+"\n";
+                    };
+                    out.close();
+                     JOptionPane.showMessageDialog(this, Header, "Error", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_PrintButtonMouseClicked
 
     /**
      * @param args the command line arguments

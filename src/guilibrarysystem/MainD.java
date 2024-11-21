@@ -7,6 +7,7 @@ package guilibrarysystem;
 
 import DataBase.User;
 import DataBase.book_CRUD;
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -346,12 +347,16 @@ public class MainD extends javax.swing.JFrame {
     }//GEN-LAST:event_borrowedbookbuttonActionPerformed
 
     private void borrowedbookbuttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_borrowedbookbuttonMouseClicked
-        // TODO add your handling code here:
-        User loggedInUser = currentUser; //retrieves the currently logged-in user
-        BorrowingHistoryFrame historyFrame = new BorrowingHistoryFrame(loggedInUser);
-        historyFrame.setVisible(true);
-        historyFrame.pack();
-        historyFrame.setLocationRelativeTo(null);  // Center the window
+        try {
+            // TODO add your handling code here:
+            User loggedInUser = currentUser; //retrieves the currently logged-in user
+            BorrowingHistoryFrame historyFrame = new BorrowingHistoryFrame(loggedInUser);
+            historyFrame.setVisible(true);
+            historyFrame.pack();
+            historyFrame.setLocationRelativeTo(null);  // Center the window
+        } catch (IOException ex) {
+            Logger.getLogger(MainD.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_borrowedbookbuttonMouseClicked
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked

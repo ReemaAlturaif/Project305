@@ -325,7 +325,7 @@ public class FoundedBook extends javax.swing.JFrame {
         }
     }
 
-    private void refreshBorrowingHistory() {
+    private void refreshBorrowingHistory() throws IOException {
         BorrowingHistoryFrame historyFrame = new BorrowingHistoryFrame(currentUser);
         historyFrame.setVisible(true);
         this.dispose(); // Close current frame
