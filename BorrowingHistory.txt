@@ -1,0 +1,21 @@
+
+                     Welcome to KAU Library
+
+
+====================YOUR Borrowing History====================
+====================User Information===========================
+User Name: re
+Number: r
+Time of issue: Fri Nov 22 12:44:51 GMT+03:00 2024
+
+===============Borrowed Books History===============
+Book Title                     Borrowing Date
+---------------------------------------------------
+CPIT252                        2024-11-22
+         
+CPIT252                        2024-11-22
+         
+CPIT252                        2024-11-22
+         
+CPIT330                        2024-11-22
+         

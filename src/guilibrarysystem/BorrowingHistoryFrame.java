@@ -23,7 +23,7 @@ import javax.swing.JOptionPane;
 public class BorrowingHistoryFrame extends javax.swing.JFrame {
 
     private User currentUser;
-    File f = new File("C:/Users/96650/Documents/NetBeansProjects/Project305/BorrowingHistory.txt");
+    File f = new File("BorrowingHistory.txt");
     PrintWriter out = new PrintWriter(new FileWriter(f,false));
     public BorrowingHistoryFrame(User user) throws IOException{
         if (user == null) {
@@ -236,29 +236,41 @@ public class BorrowingHistoryFrame extends javax.swing.JFrame {
 
     private void PrintButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PrintButtonMouseClicked
         // TODO add your handling code here:
-        String Header;
-        Date currentDate = new Date();
-        book_CRUD bookCrud = new book_CRUD();
-        List<Borrowing> history = bookCrud.getBorrowingHistory(currentUser.getId());
-        Header = 
-                     ("****************************************************************\n"+
-                      "                     Welcome to KAU Library\n"+
-                      "***************************************************************\n\n\n"+
-                      "====================YOUR Borrowing History====================\n"+
-                      "====================User Information===========================\n"+
-                      "User Name: "+currentUser.getUsername()+"\n"+
-                      "number: "+currentUser.getPhoneNumber()+"\n"+
-                      "time of issue: "+currentDate+"\n\n"+
-                      "===============borrowed books history===============\n");
-        
-                     out.printf(Header+"%-30s %-20s%n", "Book Title", "Borrowing Date\n"+
-                      "---------------------------------------------------");
-                     for (Borrowing borrowing : history) {
-                         out.printf("%-30s %-20s%n", borrowing.getBookTitle(),borrowing.getBorrowDate()+"\n");
-                         Header+= borrowing.getBookTitle()+"    "+borrowing.getBorrowDate()+"\n";
-                    };
-                    out.close();
-                     JOptionPane.showMessageDialog(this, Header, "Error", JOptionPane.INFORMATION_MESSAGE);
+        Thread printThread = new Thread(() -> {
+            try {
+                String header;
+                Date currentDate = new Date();
+                book_CRUD bookCrud = new book_CRUD();
+                List<Borrowing> history = bookCrud.getBorrowingHistory(currentUser.getId());
+                header = "\n"
+                        + "                     Welcome to KAU Library\n"
+                        + "\n\n"
+                        + "====================YOUR Borrowing History====================\n"
+                        + "====================User Information===========================\n"
+                        + "User Name: " + currentUser.getUsername() + "\n"
+                        + "Number: " + currentUser.getPhoneNumber() + "\n"
+                        + "Time of issue: " + currentDate + "\n\n"
+                        + "===============Borrowed Books History===============\n";
+
+                out.printf(header + "%-30s %-20s%n", "Book Title", "Borrowing Date\n"
+                        + "---------------------------------------------------");
+                for (Borrowing borrowing : history) {
+                    out.printf("%-30s %-20s%n", borrowing.getBookTitle(), borrowing.getBorrowDate() + "\n");
+                }
+                out.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+
+        // Start a new thread for displaying the message
+        Thread messageThread = new Thread(() -> {
+            JOptionPane.showMessageDialog(this, "Your Borrowing History has printed.", "Information", JOptionPane.INFORMATION_MESSAGE);
+        });
+
+        // Start both threads
+        printThread.start();
+        messageThread.start();
     }//GEN-LAST:event_PrintButtonMouseClicked
 
     /**
