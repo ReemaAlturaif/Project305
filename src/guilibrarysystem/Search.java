@@ -2,7 +2,8 @@ package guilibrarysystem;
 
 import DataBase.Book;
 import DataBase.User;
-import DataBase.book_CRUD;
+import Network.LibraryClient;
+import java.io.IOException;
 import javax.swing.JOptionPane;
 
 /*
@@ -17,6 +18,7 @@ import javax.swing.JOptionPane;
 public class Search extends javax.swing.JFrame {
 
     private User currentUser;
+   
 
     /**
      * Creates new form Search
@@ -180,32 +182,58 @@ public class Search extends javax.swing.JFrame {
 
     private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
         // TODO add your handling code here:                                 
-        // Get user input from text fields
-    String bookTitle = searchBookName.getText().trim();
-    String bookAuthor = searchAuthorName.getText().trim();
-
-    // Validate user input
-    if (bookTitle.isEmpty() && bookAuthor.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Please enter at least one search criterion (title or author).");
-        return;
-    }
-
-    // Perform search using book_CRUD
-    Book foundBook = book_CRUD.searchBook(bookTitle, bookAuthor);
-
-    if (foundBook != null) {
-        // Book found
-        JOptionPane.showMessageDialog(this, "Book Found: " + foundBook.getBookname()); // Use getBookname()
         
-        // Open FoundedBook window and pass found book details
-        FoundedBook f = new FoundedBook(foundBook, currentUser);
-        f.setVisible(true);
-        this.dispose();
-    } else {
-        // Book not found
-        JOptionPane.showMessageDialog(this, "No book found with the given details.");
-    }
+        try (LibraryClient client = new LibraryClient("localhost", 12345)) {
+            // Get user input
+            String bookTitle = searchBookName.getText().trim();
+            String bookAuthor = searchAuthorName.getText().trim();
 
+            // Validate user input
+            if (bookTitle.isEmpty() && bookAuthor.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please enter at least one search criterion (title or author).");
+                return;
+            }
+
+            // Prepare SEARCH_BOOK request
+            String request = "SEARCH_BOOK|" + bookTitle + "|" + bookAuthor;
+
+            // Send request to server
+            String response = client.sendRequest(request);
+            System.out.println("Server Response: " + response); ///mod
+            // Handle server response
+            if (response.startsWith("SUCCESS")) {
+                String[] bookDetails = response.split("\\|");
+
+                // Ensure response has the expected number of fields
+                if (bookDetails.length < 6) {
+                    JOptionPane.showMessageDialog(this, "Invalid server response. Please contact support.");
+                    return;
+                }
+
+                // Parse response fields safely
+                int bookId = Integer.parseInt(bookDetails[1]);  // Parse book ID
+                String bookName = bookDetails[2];               // Book name
+                String author = bookDetails[3];                 // Author name
+                String status = bookDetails[4];                 // Status (e.g., "Available")
+                int quantity = Integer.parseInt(bookDetails[5]); // Parse quantity
+
+                // Show success message and open FoundedBook window
+                JOptionPane.showMessageDialog(this, "Book Found: " + bookName + " by " + author);
+                Book foundBook = new Book(bookId, bookName, author, status, quantity);
+                FoundedBook f = new FoundedBook(foundBook, currentUser);
+                f.setVisible(true);
+                this.dispose();
+            } else {
+                // Handle case where the book is not found
+                JOptionPane.showMessageDialog(this, "No book found with the given details.");
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Error parsing server response. Please contact support.", "Parsing Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        } catch (IOException | ClassNotFoundException e) {
+            JOptionPane.showMessageDialog(this, "Error connecting to the server: " + e.getMessage(), "Connection Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
 
     }//GEN-LAST:event_searchBtnActionPerformed
 

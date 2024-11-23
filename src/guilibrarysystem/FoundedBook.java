@@ -3,6 +3,7 @@ package guilibrarysystem;
 import javax.swing.*;
 import DataBase.Book;
 import DataBase.User;
+import static DataBase.book_CRUD.updateBookStatus;
 import Network.LibraryClient;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -271,6 +272,7 @@ public class FoundedBook extends javax.swing.JFrame {
 
                 // Prepare borrowing request to the server
                 String request = "BORROW_BOOK|" + book.getId() + "|" + currentUser.getId() + "|" + borrowDate + "|" + returnDate;
+               
 
                 // Send the request to the server using LibraryClient
                 LibraryClient client = new LibraryClient("localhost", 12345); // Adjust server details as needed
@@ -282,6 +284,7 @@ public class FoundedBook extends javax.swing.JFrame {
                     // Update book quantity and UI
                     book.setQuantity(book.getQuantity() - 1); // Decrease by 1
                     int newQuantity = book.getQuantity();
+                    updateBookStatus(book.getId(),newQuantity);
 
                     if (newQuantity == 0) {
                         bookStatTxt.setText("Unavailable");

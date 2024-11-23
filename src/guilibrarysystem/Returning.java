@@ -51,7 +51,6 @@ public class Returning extends javax.swing.JFrame {
             javax.swing.JLabel[] dueDateLabels = {DueDate1, DueDate2, DueDate3, DueDate4};
 
             while (rs.next() && index < bookCheckBoxes.length) {
-                
 
                 // Set values to UI components
                 bookCheckBoxes[index].setText(rs.getString("bookName"));
@@ -409,6 +408,9 @@ public class Returning extends javax.swing.JFrame {
         if (allReturned) {
             loadUserBorrowedBooks(); // Refresh borrowed books list if all books are returned successfully
         }
+        
+
+
     }//GEN-LAST:event_Return_ButtonActionPerformed
 
     private void back6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_back6MouseClicked

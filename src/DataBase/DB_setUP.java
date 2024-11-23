@@ -83,7 +83,7 @@ public class DB_setUP {
                     "userId INT," +
                     "bookId INT," +
                     "borrowDate DATE," +
-                    "returnDate DATE," +
+                    "returnDate DATE," +//##
                     "FOREIGN KEY (userId) REFERENCES users(id)," +
                     "FOREIGN KEY (bookId) REFERENCES books(id))";
     

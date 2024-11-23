@@ -5,10 +5,12 @@
  */
 package Network;
 // server
+
 /**
  *
  * @author reaho
  */
+import DataBase.Book;
 import DataBase.book_CRUD; // Import the book_CRUD class
 import java.io.*;
 import java.net.*;
@@ -73,10 +75,47 @@ public class LibraryServer {
                     handleBorrowBookRequest(request, out);
                 } else if (request.startsWith("RETURN_BOOK")) {
                     handleReturnBookRequest(request, out);
+                } else if (request.startsWith("SEARCH_BOOK")) { // Add handling for SEARCH_BOOK
+                    handleSearchBookRequest(request, out);
                 } else {
                     out.writeObject("ERROR: Invalid Request");
                 }
             } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
+        private void handleSearchBookRequest(String request, ObjectOutputStream out) {
+            try {
+                String[] parts = request.split("\\|");
+                
+
+                if (parts.length < 2) {
+                    out.writeObject("ERROR: Malformed SEARCH_BOOK request.");
+                    return;
+                }
+                                           //mod
+                String bookTitle = parts[1].trim();            //mod
+                String bookAuthor = parts.length > 2 ? parts[2].trim()  : "";
+
+                // Perform search using book_CRUD
+                book_CRUD bookCrud = new book_CRUD();
+                Book foundBook = bookCrud.searchBook(bookTitle, bookAuthor);
+
+                if (foundBook != null) {
+                    // Send book details back to client
+                   
+                     out.writeObject("SUCCESS|" + foundBook.getId() + "|" + foundBook.getBookname() + "|" + foundBook.getAuthor() + "|" + foundBook.getStatus() + "|" + foundBook.getQuantity());
+
+                } else {
+                    out.writeObject("ERROR: Book not found.");
+                }
+            } catch (Exception e) {
+                try {
+                    out.writeObject("ERROR: " + e.getMessage());
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
                 e.printStackTrace();
             }
         }

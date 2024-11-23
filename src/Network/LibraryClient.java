@@ -46,11 +46,4 @@ public class LibraryClient implements AutoCloseable {
         if (socket != null) socket.close();
     }
 
-    public static void main(String[] args) {
-        try (LibraryClient client = new LibraryClient("localhost", 12345)) {
-            System.out.println(client.sendRequest("SEARCH_BOOK"));
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Failed to connect to the server: " + e.getMessage());
-        }
-    }
 }

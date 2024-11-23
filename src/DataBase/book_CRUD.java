@@ -63,7 +63,7 @@ public class book_CRUD {
         }
     }
 
-    public void updateBookStatus(int bookId, int quantity) {
+    public static void updateBookStatus(int bookId, int quantity) {
         String sql = "UPDATE books SET quantity = ?, status = ? WHERE id = ?";
         String status = (quantity > 0) ? "Available" : "Unavailable"; // Set status based on quantity
 
@@ -153,7 +153,7 @@ public class book_CRUD {
         String findBorrowingQuery
                 = "SELECT br.bookId FROM borrowings br "
                 + "JOIN books b ON br.bookId = b.id "
-                + "WHERE br.userId = ? AND b.bookName = ? AND br.returnDate IS NULL";
+                + "WHERE br.userId = ? AND b.bookName = ?";
 
         String updateBorrowingQuery
                 = "UPDATE borrowings SET returnDate = CURDATE() WHERE userId = ? AND bookId = ?";
@@ -193,6 +193,7 @@ public class book_CRUD {
         }
         return false; // Return failed
     }
+    
 
     public static int countOverdueBooks(int userId) {
         int count = 0;
