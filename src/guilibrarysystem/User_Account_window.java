@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package guilibrarysystem;
 
 import DataBase.User;
@@ -351,7 +348,6 @@ if (currentUser.getBirthday() != null) {
              Login log = new Login();
              log.setVisible(true);
              this.dispose();
-//            System.exit(0); // ===========CHANGE IT=======================
         }else{  
         }
     }//GEN-LAST:event_Logout_ButtonActionPerformed
@@ -466,12 +462,7 @@ if (currentUser.getBirthday() != null) {
         }
         //</editor-fold>
 
-        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new User_Account_window().setVisible(true);
-//            }
-//        });
+
  
     }
 

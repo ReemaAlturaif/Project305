@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package guilibrarysystem;
 
 import DataBase.*;
@@ -11,11 +8,7 @@ import java.io.IOException;
 import java.sql.*;
 import javax.swing.*;
 
-/**
- *
- * @author 96650
- */
-//سويت الريترن يشتغل بس على اربع كتب تم استعارتها//
+
 public class Returning extends javax.swing.JFrame {
 
     private User currentUser;
@@ -1848,12 +1841,7 @@ public class Returning extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
 
-        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new Returning().setVisible(true);
-//            }
-//        });
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

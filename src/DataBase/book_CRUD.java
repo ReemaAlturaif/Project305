@@ -1,14 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package DataBase;
 
-/**
- *
- * @author HQ
- */
+
 import static DataBase.DatabaseConnection.getConnection;
 import java.sql.*;
 import java.util.ArrayList;
@@ -51,6 +44,7 @@ public class book_CRUD {
             ps.setInt(2, userId);
             ps.setInt(3, bookId);
             ps.setString(4, borrowDate);
+            ps.setString(5, returnDate);
             if (returnDate == null) {
                 ps.setNull(5, java.sql.Types.DATE);
             } else {
@@ -68,7 +62,7 @@ public class book_CRUD {
         String status = (quantity > 0) ? "Available" : "Unavailable"; // Set status based on quantity
 
         try (Connection con = getConnection();
-                PreparedStatement pstmt = con.prepareStatement(sql)) {
+            PreparedStatement pstmt = con.prepareStatement(sql)) {
             pstmt.setInt(1, quantity);
             pstmt.setString(2, status);
             pstmt.setInt(3, bookId);
@@ -194,25 +188,4 @@ public class book_CRUD {
         return false; // Return failed
     }
     
-
-    public static int countOverdueBooks(int userId) {
-        int count = 0;
-        try (Connection con = getConnection()) {
-            String query = "SELECT COUNT(*) AS overdueCount "
-                    + "FROM borrowings "
-                    + "WHERE userId = ? AND returnDate < CURDATE() AND returnDate IS NOT NULL";
-            try (PreparedStatement ps = con.prepareStatement(query)) {
-                ps.setInt(1, userId);
-                ResultSet rs = ps.executeQuery();
-
-                if (rs.next()) {
-                    count = rs.getInt("overdueCount");
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return count;
-    }
-
 }

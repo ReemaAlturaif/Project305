@@ -1,10 +1,5 @@
 package guilibrarysystem;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 import DataBase.Borrowing;
 import DataBase.User;
 import DataBase.book_CRUD;
@@ -285,12 +280,7 @@ public class BorrowingHistoryFrame extends javax.swing.JFrame {
 
         //</editor-fold>
 
-        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new BorrowingHistoryFrame().setVisible(true);
-//            }
-//        });
+
     }
 
 

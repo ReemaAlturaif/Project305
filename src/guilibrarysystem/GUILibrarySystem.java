@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package guilibrarysystem;
 
 import DataBase.DB_setUP;
@@ -10,11 +6,6 @@ import Network.LibraryServer;
 import java.io.IOException;
 
 
-
-/**
- *
- * @author reaho
- */
 
 public class GUILibrarySystem {
 

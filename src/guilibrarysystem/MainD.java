@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package guilibrarysystem;
 
 import DataBase.User;
@@ -13,10 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author reaho
- */
+
 public class MainD extends javax.swing.JFrame {
 
     /**
@@ -56,8 +49,6 @@ public class MainD extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         Totalborrowedbook = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        overduebook = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         createreturn = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -107,19 +98,6 @@ public class MainD extends javax.swing.JFrame {
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icons8-dot-30.png"))); // NOI18N
 
-        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icons8-dot-30.png"))); // NOI18N
-
-        overduebook.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        overduebook.setForeground(new java.awt.Color(204, 204, 204));
-        overduebook.setText("Overdue Books");
-        overduebook.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        overduebook.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                overduebookMouseClicked(evt);
-            }
-        });
-
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icons8-dot-30.png"))); // NOI18N
 
@@ -156,11 +134,9 @@ public class MainD extends javax.swing.JFrame {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(overduebook)
                             .addComponent(Totalborrowedbook)
                             .addComponent(createreturn)))
                     .addGroup(jPanel4Layout.createSequentialGroup()
@@ -176,20 +152,15 @@ public class MainD extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(accountsetting)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Totalborrowedbook)
-                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(overduebook))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(createreturn)))
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Totalborrowedbook)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(createreturn)
+                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(45, 45, 45))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -214,7 +185,7 @@ public class MainD extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(usernameProfile)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -390,23 +361,6 @@ public class MainD extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "You have currently borrowed: " + totalOfCurBorrowed + " books");
     }//GEN-LAST:event_TotalborrowedbookMouseClicked
 
-    private void overduebookMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_overduebookMouseClicked
-        // TODO add your handling code here:
-        // Get the current user ID
-        int userId = currentUser.getId();
-
-        // Fetch the number of overdue books
-        int numOfnotReturnedBook = book_CRUD.countOverdueBooks(userId);
-        if (numOfnotReturnedBook == 0) {
-            JOptionPane.showMessageDialog(null, "You have No overdue books.");
-        } else {
-            // Display the result in a message dialog
-            JOptionPane.showMessageDialog(null, "You have overdue: " + numOfnotReturnedBook + " books.\n"
-                    + "Please return them as soon as possible to avoid additional fines.");
-        }
-
-    }//GEN-LAST:event_overduebookMouseClicked
-
     private void createreturnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_createreturnMouseClicked
         // TODO add your handling code here:
         Returning m = new Returning(currentUser);
@@ -441,12 +395,7 @@ public class MainD extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new MainD().setVisible(true);
-//            }
-//        });
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -457,7 +406,6 @@ public class MainD extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel6;
@@ -466,7 +414,6 @@ public class MainD extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JLabel overduebook;
     private javax.swing.JButton searchbutton;
     private javax.swing.JLabel usernameProfile;
     // End of variables declaration//GEN-END:variables

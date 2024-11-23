@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package DataBase;
 
 
@@ -10,11 +6,6 @@ import static DataBase.DatabaseConnection.getConnection;
 import java.sql.*;
 import javax.swing.*;
 
-/**
-
- *
- * @author HQ
- */
 //operations (Create, Read, Update, Delete)
 public class user_CRUD {
            public void addUser(int id, String username, String password, String email, String phoneNumber) {
