@@ -237,6 +237,12 @@ public class BorrowingHistoryFrame extends javax.swing.JFrame {
                 Date currentDate = new Date();
                 book_CRUD bookCrud = new book_CRUD();
                 List<Borrowing> history = bookCrud.getBorrowingHistory(currentUser.getId());
+                //if there is not bowrrowed books
+                if (history == null || history.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No borrowing history found to print", "Info", JOptionPane.INFORMATION_MESSAGE);
+                return;
+                //if there are bowrroed books to print
+                }else{
                 header = "\n"
                         + "                     Welcome to KAU Library\n"
                         + "\n\n"
@@ -249,12 +255,16 @@ public class BorrowingHistoryFrame extends javax.swing.JFrame {
 
                 out.printf(header + "%-30s %-20s%n", "Book Title", "Borrowing Date\n"
                         + "---------------------------------------------------");
+                //print the list of the books using for loop
                 for (Borrowing borrowing : history) {
                     out.printf("%-30s %-20s%n", borrowing.getBookTitle(), borrowing.getBorrowDate() + "\n");
                 }
                 out.close();
-            } catch (Exception e) {
+                //if the books are faild to be printed
+            } }catch (Exception e){
                 e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Failed to print borrowing history: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+
             }
         });
 
