@@ -1,4 +1,3 @@
-
 package guilibrarysystem;
 
 import DataBase.*;
@@ -7,7 +6,6 @@ import java.awt.Color;
 import java.io.IOException;
 import java.sql.*;
 import javax.swing.*;
-
 
 public class Returning extends javax.swing.JFrame {
 
@@ -104,72 +102,45 @@ public class Returning extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        back6 = new javax.swing.JLabel();
+        Author2label = new javax.swing.JLabel();
+        BookName4Checkbox = new javax.swing.JCheckBox();
+        Author3Label = new javax.swing.JLabel();
+        DueDate1 = new javax.swing.JLabel();
+        Author4Label = new javax.swing.JLabel();
+        DueDate2 = new javax.swing.JLabel();
         BookName2Checkbox = new javax.swing.JCheckBox();
+        DueDate3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        DueDate4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        Select_All_Button = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        Return_Button = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
+        Select_None_Button = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         BookName3Checkbox = new javax.swing.JCheckBox();
-        BookName1checkbox = new javax.swing.JCheckBox();
-        BookName4Checkbox = new javax.swing.JCheckBox();
-        DueDate1 = new javax.swing.JLabel();
-        DueDate2 = new javax.swing.JLabel();
-        DueDate3 = new javax.swing.JLabel();
-        DueDate4 = new javax.swing.JLabel();
-        Select_All_Button = new javax.swing.JButton();
-        Return_Button = new javax.swing.JButton();
-        Select_None_Button = new javax.swing.JButton();
-        back6 = new javax.swing.JLabel();
         Author1label = new javax.swing.JLabel();
-        Author2label = new javax.swing.JLabel();
-        Author3Label = new javax.swing.JLabel();
-        Author4Label = new javax.swing.JLabel();
+        BookName1checkbox = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(51, 51, 51));
 
-        BookName2Checkbox.setText("Wuthering Heights");
-        BookName2Checkbox.setToolTipText("");
-        BookName2Checkbox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BookName2CheckboxActionPerformed(evt);
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        back6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/left-arrow (2).png"))); // NOI18N
+        back6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                back6MouseClicked(evt);
             }
         });
+        jPanel1.add(back6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 72, 73));
 
-        jLabel1.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel1.setText("Name:");
-
-        jLabel2.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel2.setText("Due Date:");
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 204, 153));
-        jLabel3.setText("Borrowed Books:");
-
-        jLabel4.setBackground(new java.awt.Color(255, 204, 153));
-        jLabel4.setFont(new java.awt.Font("Showcard Gothic", 1, 36)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 204, 153));
-        jLabel4.setText("Create Returns");
-
-        jLabel5.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel5.setText("Author:");
-
-        BookName3Checkbox.setText("Moby Dick");
-        BookName3Checkbox.setToolTipText("");
-        BookName3Checkbox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BookName3CheckboxActionPerformed(evt);
-            }
-        });
-
-        BookName1checkbox.setText("Jane Eyre ");
-        BookName1checkbox.setToolTipText("");
-        BookName1checkbox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BookName1checkboxActionPerformed(evt);
-            }
-        });
+        Author2label.setText("jLabel11");
+        jPanel1.add(Author2label, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 230, -1, -1));
 
         BookName4Checkbox.setText("HarryPotter");
         BookName4Checkbox.setToolTipText("");
@@ -178,14 +149,42 @@ public class Returning extends javax.swing.JFrame {
                 BookName4CheckboxActionPerformed(evt);
             }
         });
+        jPanel1.add(BookName4Checkbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 280, 189, 29));
+
+        Author3Label.setText("jLabel12");
+        jPanel1.add(Author3Label, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 260, -1, -1));
 
         DueDate1.setText("22/9/2024");
+        jPanel1.add(DueDate1, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 200, 107, -1));
+
+        Author4Label.setText("jLabel13");
+        jPanel1.add(Author4Label, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 290, -1, -1));
 
         DueDate2.setText("22/9/2024");
+        jPanel1.add(DueDate2, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 230, 107, -1));
+
+        BookName2Checkbox.setText("Wuthering Heights");
+        BookName2Checkbox.setToolTipText("");
+        BookName2Checkbox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BookName2CheckboxActionPerformed(evt);
+            }
+        });
+        jPanel1.add(BookName2Checkbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 220, 189, 29));
 
         DueDate3.setText("22/9/2024");
+        jPanel1.add(DueDate3, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 260, 107, -1));
+
+        jLabel1.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel1.setText("Name:");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 170, 37, -1));
 
         DueDate4.setText("22/9/2024");
+        jPanel1.add(DueDate4, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 290, 107, -1));
+
+        jLabel2.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel2.setText("Due Date:");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 170, 61, -1));
 
         Select_All_Button.setBackground(new java.awt.Color(255, 204, 153));
         Select_All_Button.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
@@ -196,6 +195,12 @@ public class Returning extends javax.swing.JFrame {
                 Select_All_ButtonActionPerformed(evt);
             }
         });
+        jPanel1.add(Select_All_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 410, 128, 32));
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 204, 153));
+        jLabel3.setText("Borrowed Books:");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 140, 189, -1));
 
         Return_Button.setBackground(new java.awt.Color(255, 204, 153));
         Return_Button.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
@@ -206,6 +211,13 @@ public class Returning extends javax.swing.JFrame {
                 Return_ButtonActionPerformed(evt);
             }
         });
+        jPanel1.add(Return_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 410, 196, 32));
+
+        jLabel4.setBackground(new java.awt.Color(255, 204, 153));
+        jLabel4.setFont(new java.awt.Font("Showcard Gothic", 1, 36)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 204, 153));
+        jLabel4.setText("Create Returns");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 50, 452, 35));
 
         Select_None_Button.setBackground(new java.awt.Color(255, 204, 153));
         Select_None_Button.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
@@ -216,122 +228,42 @@ public class Returning extends javax.swing.JFrame {
                 Select_None_ButtonActionPerformed(evt);
             }
         });
+        jPanel1.add(Select_None_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 410, 128, 32));
 
-        back6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/left-arrow (2).png"))); // NOI18N
-        back6.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                back6MouseClicked(evt);
+        jLabel5.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel5.setText("Author:");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 170, 66, -1));
+
+        BookName3Checkbox.setText("Moby Dick");
+        BookName3Checkbox.setToolTipText("");
+        BookName3Checkbox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BookName3CheckboxActionPerformed(evt);
             }
         });
+        jPanel1.add(BookName3Checkbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 250, 189, 29));
 
         Author1label.setText("jLabel10");
+        jPanel1.add(Author1label, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 200, -1, -1));
 
-        Author2label.setText("jLabel11");
-
-        Author3Label.setText("jLabel12");
-
-        Author4Label.setText("jLabel13");
+        BookName1checkbox.setText("Jane Eyre ");
+        BookName1checkbox.setToolTipText("");
+        BookName1checkbox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BookName1checkboxActionPerformed(evt);
+            }
+        });
+        jPanel1.add(BookName1checkbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 190, 189, 29));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(61, 61, 61)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(Select_All_Button, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(Select_None_Button, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Return_Button, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGap(51, 51, 51)
-                                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                        .addComponent(BookName3Checkbox, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                            .addComponent(BookName1checkbox, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                            .addComponent(BookName2Checkbox, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                                    .addComponent(BookName4Checkbox, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addGap(67, 67, 67)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(Author4Label)
-                                                    .addComponent(Author1label)
-                                                    .addComponent(Author2label)
-                                                    .addComponent(Author3Label))))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addGap(20, 20, 20)
-                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(188, 188, 188)))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(DueDate1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(DueDate2, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(DueDate3, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(DueDate4, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 17, Short.MAX_VALUE))))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(back6, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(back6, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(24, 24, 24)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel5))
-                .addGap(13, 13, 13)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BookName1checkbox, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(DueDate1)
-                    .addComponent(Author1label))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BookName2Checkbox, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(DueDate2)
-                    .addComponent(Author2label))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BookName3Checkbox, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(DueDate3)
-                    .addComponent(Author3Label))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BookName4Checkbox, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(DueDate4)
-                    .addComponent(Author4Label))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 119, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Select_All_Button, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Return_Button, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Select_None_Button, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(52, 52, 52))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 519, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -376,10 +308,17 @@ public class Returning extends javax.swing.JFrame {
 
         boolean allReturned = true;
 
+        // Arrays for checkboxes and corresponding labels
         javax.swing.JCheckBox[] bookCheckBoxes = {BookName1checkbox, BookName2Checkbox, BookName3Checkbox, BookName4Checkbox};
+        javax.swing.JLabel[] authorsLabels = {Author1label, Author2label, Author3Label, Author4Label};
+        javax.swing.JLabel[] dueDatesLabels = {DueDate1, DueDate2, DueDate3, DueDate4};
 
         try (LibraryClient client = new LibraryClient("localhost", 12345)) {
-            for (javax.swing.JCheckBox checkBox : bookCheckBoxes) {
+            // Loop through all checkboxes
+            for (int i = 0; i < bookCheckBoxes.length; i++) {
+                javax.swing.JCheckBox checkBox = bookCheckBoxes[i];
+
+                // Check if the checkbox is selected and visible
                 if (checkBox.isSelected() && checkBox.isVisible()) {
                     String bookName = checkBox.getText();
                     String request = "RETURN_BOOK|" + currentUser.getId() + "|" + bookName;
@@ -387,6 +326,14 @@ public class Returning extends javax.swing.JFrame {
 
                     if (response.equalsIgnoreCase("SUCCESS")) {
                         JOptionPane.showMessageDialog(this, "Book returned: " + bookName);
+
+                        // Dynamically remove the checkbox, author label, and due date label
+                        jPanel1.remove(checkBox); // Replace `parentPanel` with the actual panel variable name
+                        jPanel1.remove(authorsLabels[i]);
+                        jPanel1.remove(dueDatesLabels[i]);
+
+                        // Log actions for debugging
+                        System.out.println("Successfully removed components for book: " + bookName);
                     } else {
                         allReturned = false;
                         JOptionPane.showMessageDialog(this, "Failed to return book: " + bookName + ". Reason: " + response);
@@ -398,11 +345,14 @@ public class Returning extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error connecting to the server: " + e.getMessage());
         }
 
-        if (allReturned) {
-            loadUserBorrowedBooks(); // Refresh borrowed books list if all books are returned successfully
-        }
-        
+        // Refresh the GUI to reflect the component removals
+        jPanel1.revalidate(); // Replace `parentPanel` with the actual panel variable name
+        jPanel1.repaint();
 
+        // Reload borrowed books if all books are returned
+        if (allReturned) {
+            loadUserBorrowedBooks(); // This refreshes the entire borrowed book list
+        }
 
     }//GEN-LAST:event_Return_ButtonActionPerformed
 
@@ -1840,8 +1790,6 @@ public class Returning extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
-
-
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1866,5 +1814,6 @@ public class Returning extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

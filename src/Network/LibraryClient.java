@@ -31,6 +31,7 @@ public class LibraryClient implements AutoCloseable {
         }
 
         out.writeObject(request);
+       
         Object response = in.readObject();
         if (response instanceof String) {
             return (String) response;
